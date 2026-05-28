@@ -27,7 +27,7 @@
               alles wat uw leven een stuk makkelijker maakt.
           </p> 
 		  <p>
-			  Maar ook wij kunnen geen ijzer met handen breken.
+			  Maar ook wij kunnen geen ijzer met handen breken. Hoe graag wij het ook wel niet willen.
 		  </p>
 		  <p>
 			  De door u aangevraagde pagina / functie is nog niet klaar voor gebruik.
