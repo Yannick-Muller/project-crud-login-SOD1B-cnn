@@ -1,7 +1,7 @@
 <?php 
 try 
 { 
-    $db = new PDO('mysql:host=localhost;dbname=breadcompany', 'root' ,''); 
+    $db = new PDO('mysql:host=localhost;dbname=cnn', 'root' ,''); 
 } 
 catch(PDOException $e) 
 { 
@@ -13,4 +13,4 @@ catch(PDOException $e)
      
     trigger_error($sMsg); 
 } 
-?> 
+?>
