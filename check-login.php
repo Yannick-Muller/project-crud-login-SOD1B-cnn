@@ -7,6 +7,7 @@
 // (zie dummy_admin_login.php). Pas dit aan als jouw echte inlogsysteem andere
 // sessievariabelen gebruikt.
 
+
 session_start();
 
 if (

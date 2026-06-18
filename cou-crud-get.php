@@ -3,7 +3,7 @@ require_once "check-login.php";
 require_once "database.php";
 
 $pageTitle = "Onderhoud countries";
-require "header.php";
+include "nav.html";
 
 $result = $conn->query("SELECT idcountry, name, code FROM country ORDER BY name");
 ?>

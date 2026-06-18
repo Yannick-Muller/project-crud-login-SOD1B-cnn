@@ -3,7 +3,7 @@ require_once "check-login.php";
 require_once "database.php";
 
 $pageTitle = "Onderhoud categorieën";
-require "header.php";
+include "nav.html";
 
 $result = $conn->query("SELECT ID, name FROM category ORDER BY name");
 ?>
