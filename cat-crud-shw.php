@@ -23,4 +23,3 @@ $result = $conn->query("SELECT ID, name FROM category ORDER BY name");
     <?php endwhile; ?>
 </table>
 
-<?php require "footer.php"; ?>
