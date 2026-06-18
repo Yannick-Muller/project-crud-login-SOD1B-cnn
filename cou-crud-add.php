@@ -2,7 +2,7 @@
 require_once "check-login.php";
 
 $pageTitle = "Land toevoegen";
-require "header.php";
+include "nav.html";
 ?>
 
 <h2>Land toevoegen</h2>

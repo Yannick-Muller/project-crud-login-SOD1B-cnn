@@ -12,7 +12,6 @@ if ($name === "" || !preg_match("/^[A-Za-z\s]+$/", $name)) {
     exit;
 }
 
-// Controleer: komt naam al voor in de database?
 $stmt = $conn->prepare("SELECT ID FROM category WHERE name = ?");
 $stmt->bind_param("s", $name);
 $stmt->execute();

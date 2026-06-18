@@ -2,6 +2,7 @@
 require_once "check-login.php";
 require_once "database.php";
 
+
 $name = trim($_POST["name"] ?? "");
 $code = trim($_POST["code"] ?? "");
 

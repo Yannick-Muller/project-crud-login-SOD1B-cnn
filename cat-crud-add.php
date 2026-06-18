@@ -2,7 +2,7 @@
 require_once "check-login.php";
 
 $pageTitle = "Categorie toevoegen";
-require "header.php";
+include "nav.html";
 ?>
 
 <h2>Categorie toevoegen</h2>
@@ -20,4 +20,3 @@ require "header.php";
     <button type="submit">Sla op</button>
 </form>
 
-<?php require "footer.php"; ?>
