@@ -4,6 +4,7 @@ require_once "database.php";
 
 $ID = (int)($_POST["ID"] ?? 0);
 
+
 $stmt = $conn->prepare("SELECT COUNT(*) AS aantal FROM product WHERE categoryid = ?");
 $stmt->bind_param("i", $ID);
 $stmt->execute();

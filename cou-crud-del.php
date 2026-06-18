@@ -32,7 +32,7 @@ if ($result->num_rows !== 1) {
 $land = $result->fetch_assoc();
 
 $pageTitle = "Land verwijderen";
-require "header.php";
+include "nav.html";
 ?>
 
 <h2>Land verwijderen</h2>

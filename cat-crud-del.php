@@ -27,7 +27,7 @@ if ($result->num_rows !== 1) {
 $categorie = $result->fetch_assoc();
 
 $pageTitle = "Categorie verwijderen";
-require "header.php";
+include "nav.html";
 ?>
 
 <h2>Categorie verwijderen</h2>
