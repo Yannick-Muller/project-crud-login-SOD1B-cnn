@@ -1,6 +1,6 @@
 <?php
 session_start();
-require 'config.php'; // jouw database connectie
+require 'config.php';
 
 
 if (!isset($_SESSION['klantid'])) {
@@ -16,13 +16,19 @@ $nieuw1 = $_POST['nieuw1'];
 $nieuw2 = $_POST['nieuw2'];
 
 
+if (empty($huidig)) {
+    echo "Email en wachtwoord stemmen niet overeen";
+    exit;
+}
+
+
 $sql = "SELECT wachtwoord FROM klanten WHERE klantid = :id";
 $stmt = $pdo->prepare($sql);
 $stmt->execute(['id' => $klantid]);
 $klant = $stmt->fetch();
 
 if (!$klant) {
-    echo "Fout: klant niet gevonden.";
+    echo "Email en wachtwoord stemmen niet overeen";
     exit;
 }
 
@@ -30,20 +36,20 @@ $hash_oud = $klant['wachtwoord'];
 
 
 if (!password_verify($huidig, $hash_oud)) {
-    echo "Huidig wachtwoord is onjuist.";
+    echo "Email en wachtwoord stemmen niet overeen";
     exit;
 }
 
 
 if ($nieuw1 !== $nieuw2) {
-    echo "De nieuwe wachtwoorden komen niet overeen.";
+    echo "Email en wachtwoord stemmen niet overeen";
     exit;
 }
 
 
 $nieuw_hash = password_hash($nieuw1, PASSWORD_DEFAULT);
 
-// 7. Update database
+
 $sql = "UPDATE klanten SET wachtwoord = :nieuw WHERE klantid = :id";
 $stmt = $pdo->prepare($sql);
 $stmt->execute([

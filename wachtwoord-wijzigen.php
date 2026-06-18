@@ -1,6 +1,6 @@
 <?php
 session_start();
-require 'config.php'; // database connectie
+require 'config.php';
 
 // 1. Check of klant is ingelogd
 if (!isset($_SESSION['klantid'])) {
@@ -29,7 +29,9 @@ if (!isset($_SESSION['klantid'])) {
     <label>Herhaal nieuw wachtwoord:</label><br>
     <input type="password" name="nieuw2" required><br><br>
 
-    <button type="submit">Wachtwoord wijzigen</button>
+    <!-- Verplichte knoppen -->
+    <button type="submit">Wijzigen</button>
+    <a href="index.php"><button type="button">Annuleren</button></a>
 
 </form>
 
