@@ -2,6 +2,7 @@
 require_once "check-login.php";
 require_once "database.php";
 
+
 $ID = (int)($_GET["ID"] ?? 0);
 
 $stmt = $conn->prepare("SELECT ID, name FROM category WHERE ID = ?");

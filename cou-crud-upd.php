@@ -2,6 +2,7 @@
 require_once "check-login.php";
 require_once "database.php";
 
+
 $ID = (int)($_GET["ID"] ?? 0);
 
 $stmt = $conn->prepare("SELECT idcountry, name, code FROM country WHERE idcountry = ?");

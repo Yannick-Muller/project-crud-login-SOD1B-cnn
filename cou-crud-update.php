@@ -18,7 +18,6 @@ if (
     exit;
 }
 
-// Controleer of naam al bestaat bij een ANDER land
 $stmt = $conn->prepare("SELECT idcountry FROM country WHERE name = ? AND idcountry <> ?");
 $stmt->bind_param("si", $name, $ID);
 $stmt->execute();
@@ -32,7 +31,6 @@ if ($stmt->num_rows > 0) {
 }
 $stmt->close();
 
-// Controleer of code al bestaat bij een ANDER land
 $stmt = $conn->prepare("SELECT idcountry FROM country WHERE code = ? AND idcountry <> ?");
 $stmt->bind_param("si", $code, $ID);
 $stmt->execute();
