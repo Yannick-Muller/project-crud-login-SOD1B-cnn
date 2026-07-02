@@ -2,63 +2,66 @@
 require 'dbconnect.php';
 session_start();
 
-
-if (!isset($_SESSION['userrole']) || $_SESSION['userrole'] != 'admin') {
+// Alleen voor ingelogde klanten
+if (!isset($_SESSION['userrole']) || $_SESSION['userrole'] != 'klant') {
     header("Location: login.php");
     exit;
 }
 
+$sql = "SELECT product.id,
+               product.productname,
+               product.price,
+               category.name AS categoryname
+        FROM product
+        JOIN category ON product.categoryid = category.id
+        WHERE product.isactive = 'J'";
 
-if ($_SERVER['REQUEST_METHOD'] == 'POST') {
-    $productname = $_POST['productname'];
-    $price = $_POST['price'];
-    $categoryid = $_POST['categoryid'];
-    $supplierid = $_POST['supplierid'];
-    $isactive = $_POST['isactive'];
-
-    $sql = "INSERT INTO product (productname, price, categoryid, supplierid, isactive)
-            VALUES (:productname, :price, :categoryid, :supplierid, :isactive)";
-    $stmt = $db->prepare($sql);
-    $stmt->execute([
-        ':productname' => $productname,
-        ':price' => $price,
-        ':categoryid' => $categoryid,
-        ':supplierid' => $supplierid,
-        ':isactive' => $isactive
-    ]);
-
-    header("Location: pro-crud-get.php");
-    exit;
-}
+$stmt = $db->prepare($sql);
+$stmt->execute();
+$products = $stmt->fetchAll(PDO::FETCH_ASSOC);
 ?>
 <!DOCTYPE html>
 <html lang="nl">
 <head>
     <meta charset="UTF-8">
-    <title>Product toevoegen</title>
+    <title>Product bestellen</title>
 </head>
 <body>
 
-<h1>Product toevoegen</h1>
+<h1>Product bestellen</h1>
 
-<form method="post">
-    <label>Naam:</label><br>
-    <input type="text" name="productname" required><br><br>
+<h2>LET OP: je kan maar één product tegelijk bestellen</h2>
 
-    <label>Prijs:</label><br>
-    <input type="number" step="0.01" name="price" required><br><br>
+<table border="1" cellpadding="8">
+    <tr>
+        <th>ID</th>
+        <th>Naam</th>
+        <th>Categorie</th>
+        <th>Prijs</th>
+        <th>Aantal</th>
+        <th>Actie</th>
+    </tr>
 
-    <label>Categorie ID:</label><br>
-    <input type="number" name="categoryid" required><br><br>
+    <?php foreach ($products as $p): ?>
+        <tr>
+            <td><?= $p['id'] ?></td>
+            <td><?= $p['productname'] ?></td>
+            <td><?= $p['categoryname'] ?></td>
+            <td><?= $p['price'] ?></td>
+            <td>
+                <form method="post" action="pur-crud-adding.php">
+                    <input type="hidden" name="productid" value="<?= $p['id'] ?>">
+                    <input type="hidden" name="price" value="<?= $p['price'] ?>">
+                    <input type="number" name="quantity" min="1" value="1" required>
+            </td>
+            <td>
+                    <button type="submit">Bestellen</button>
+                </form>
+            </td>
+        </tr>
+    <?php endforeach; ?>
 
-    <label>Leverancier ID:</label><br>
-    <input type="number" name="supplierid" required><br><br>
-
-    <label>Actief (J/N):</label><br>
-    <input type="text" name="isactive" maxlength="1" required><br><br>
-
-    <button type="submit">Opslaan</button>
-</form>
+</table>
 
 </body>
 </html>
