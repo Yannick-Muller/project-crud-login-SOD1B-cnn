@@ -1,6 +1,6 @@
 <?php
 session_start();
-require 'config.php';
+require 'dbconnect.php';
 
 // Alleen ingelogde beheerder
 if (!isset($_SESSION['isAdmin']) || $_SESSION['isAdmin'] != 1) {
