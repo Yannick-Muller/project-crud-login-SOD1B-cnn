@@ -1,53 +1,35 @@
 <?php
 require 'dbconnect.php';
-session_start();
 
-
-if (!isset($_SESSION['userrole']) || $_SESSION['userrole'] != 'admin') {
-    header("Location: login.php");
-    exit;
-}
-
-
-$id = $_GET['id'] ?? null;
-if (!$id) {
-    echo "Geen product geselecteerd.";
-    exit;
-}
-
+$id = $_GET['id'];
 
 $sql = "SELECT * FROM product WHERE id = :id";
 $stmt = $db->prepare($sql);
 $stmt->execute([':id' => $id]);
 $product = $stmt->fetch(PDO::FETCH_ASSOC);
 
-if (!$product) {
-    echo "Product niet gevonden.";
-    exit;
-}
-
-
-if ($_SERVER['REQUEST_METHOD'] == 'POST') {
-    $productname = $_POST['productname'];
+if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+    $name = $_POST['productname'];
     $price = $_POST['price'];
-    $categoryid = $_POST['categoryid'];
-    $supplierid = $_POST['supplierid'];
-    $isactive = $_POST['isactive'];
+    $category = $_POST['categoryid'];
+    $supplier = $_POST['supplierid'];
+    $active = $_POST['isactive'];
 
-    $update = "UPDATE product 
-               SET productname = :productname,
-                   price = :price,
-                   categoryid = :categoryid,
-                   supplierid = :supplierid,
-                   isactive = :isactive
-               WHERE id = :id";
-    $stmt = $db->prepare($update);
+    $sql = "UPDATE product 
+            SET productname = :name,
+                price = :price,
+                categoryid = :category,
+                supplierid = :supplier,
+                isactive = :active
+            WHERE id = :id";
+
+    $stmt = $db->prepare($sql);
     $stmt->execute([
-        ':productname' => $productname,
+        ':name' => $name,
         ':price' => $price,
-        ':categoryid' => $categoryid,
-        ':supplierid' => $supplierid,
-        ':isactive' => $isactive,
+        ':category' => $category,
+        ':supplier' => $supplier,
+        ':active' => $active,
         ':id' => $id
     ]);
 
@@ -62,26 +44,16 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     <title>Product wijzigen</title>
 </head>
 <body>
-
 <h1>Product wijzigen</h1>
 
 <form method="post">
-    <label>Naam:</label><br>
-    <input type="text" name="productname" value="<?= $product['productname'] ?>" required><br><br>
+    Naam: <input type="text" name="productname" value="<?= $product['productname'] ?>"><br><br>
+    Prijs: <input type="number" step="0.01" name="price" value="<?= $product['price'] ?>"><br><br>
+    Categorie ID: <input type="number" name="categoryid" value="<?= $product['categoryid'] ?>"><br><br>
+    Leverancier ID: <input type="number" name="supplierid" value="<?= $product['supplierid'] ?>"><br><br>
+    Actief (J/N): <input type="text" name="isactive" value="<?= $product['isactive'] ?>"><br><br>
 
-    <label>Prijs:</label><br>
-    <input type="number" step="0.01" name="price" value="<?= $product['price'] ?>" required><br><br>
-
-    <label>Categorie ID:</label><br>
-    <input type="number" name="categoryid" value="<?= $product['categoryid'] ?>" required><br><br>
-
-    <label>Leverancier ID:</label><br>
-    <input type="number" name="supplierid" value="<?= $product['supplierid'] ?>" required><br><br>
-
-    <label>Actief (J/N):</label><br>
-    <input type="text" name="isactive" maxlength="1" value="<?= $product['isactive'] ?>" required><br><br>
-
-    <button type="submit">Opslaan wijziging</button>
+    <button type="submit">Opslaan</button>
 </form>
 
 </body>
