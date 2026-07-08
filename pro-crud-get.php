@@ -1,13 +1,14 @@
 <?php
 require 'dbconnect.php';
 
+// Haal alle producten op met categorie en leverancier
 $sql = "SELECT 
             p.id,
             p.productname,
             p.price,
             p.isactive,
             c.name AS categoryname,
-            s.name AS suppliername
+            s.suppliername AS suppliername
         FROM product p
         LEFT JOIN category c ON p.categoryid = c.id
         LEFT JOIN supplier s ON p.supplierid = s.id
@@ -41,12 +42,12 @@ $products = $stmt->fetchAll(PDO::FETCH_ASSOC);
 
     <?php foreach ($products as $p): ?>
         <tr>
-            <td><?= $p['id'] ?></td>
-            <td><?= $p['productname'] ?></td>
-            <td><?= $p['categoryname'] ?></td>
-            <td><?= $p['suppliername'] ?></td>
-            <td><?= number_format($p['price'], 2, ',', '.') ?></td>
-            <td><?= $p['isactive'] ?></td>
+            <td><?= htmlspecialchars($p['id']) ?></td>
+            <td><?= htmlspecialchars($p['productname']) ?></td>
+            <td><?= htmlspecialchars($p['categoryname']) ?></td>
+            <td><?= htmlspecialchars($p['suppliername']) ?></td>
+            <td><?= htmlspecialchars(number_format($p['price'], 2, ',', '.')) ?></td>
+            <td><?= htmlspecialchars($p['isactive']) ?></td>
             <td>
                 <a href="pro-crud-upd.php?id=<?= $p['id'] ?>">Wijzigen</a> |
                 <a href="pro-crud-del.php?id=<?= $p['id'] ?>">Verwijderen</a>
