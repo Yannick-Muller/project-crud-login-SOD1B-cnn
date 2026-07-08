@@ -8,7 +8,7 @@ $sql = "SELECT
             p.price,
             p.isactive,
             c.name AS categoryname,
-            s.suppliername AS suppliername
+            s.company AS suppliername
         FROM product p
         LEFT JOIN category c ON p.categoryid = c.id
         LEFT JOIN supplier s ON p.supplierid = s.id
