@@ -1,11 +1,4 @@
 <?php
-// check-login.php
-// Controleert of er een ingelogde BEHEERDER is, gebaseerd op de sessievariabelen
-// die het (dummy) inlogsysteem zet: benJeErAl en SoortToegang.
-//
-// AANNAME: SoortToegang == "Beheer" betekent dat de ingelogde gebruiker beheerder is
-// (zie dummy_admin_login.php). Pas dit aan als jouw echte inlogsysteem andere
-// sessievariabelen gebruikt.
 
 session_start();
 
