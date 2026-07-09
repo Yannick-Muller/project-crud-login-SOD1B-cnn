@@ -1,5 +1,5 @@
 <?php
 session_start();
 session_destroy();
-header("Location: beh-log.php");
+header("Location: beh-menu.php");
 exit;
