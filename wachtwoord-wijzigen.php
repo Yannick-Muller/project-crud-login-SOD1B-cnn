@@ -1,6 +1,6 @@
 <?php
 session_start();
-require 'config.php';
+require 'dbconnect.php';
 
 // 1. Check of klant is ingelogd
 if (!isset($_SESSION['klantid'])) {
